@@ -28,7 +28,7 @@ def usage(exit_code=0):
     prints usage instructions and help.
     """
     print("Usage: {} ISO_CODE [debug] [usecache] [help]".format(sys.argv[0]))
-    print("  ISO_CODE    filter data only of this country (required).")
+    print("  ISO_CODE    (required) filter data only of this country code.")
     print("  [debug]     script prints more output while running.")
     print("  [usecache]  use the local file (if present) instead of downloading data again.")
     print("  [help]      displays this message")
