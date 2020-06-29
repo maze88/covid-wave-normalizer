@@ -27,9 +27,8 @@ Examples:
 ## What to do with output
 
 - Plotting the output data on a chart in a spreadsheet is highly recommended!
-- Besides that, arguing on the internet with conspiracy theorists and anti-vaxxers *might* be fun...
+- Besides that, arguing on the internet with conspiracy theorists and anti-vaxxers *might* be entertaining...
 
 ### Note:
 
-Not all countrys' data has the required columns to perform this calculation.
-ISO codes USA and ISR, for example, do!
+Not all countrys' data has the required columns to perform this calculation. ISO codes ISR and USA, for example, do!
