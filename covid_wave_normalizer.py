@@ -1,20 +1,21 @@
 #!/usr/bin/python
 """
-this script pulls covid data from the web and processes it, returning a csv
-table with the normalized new (positive) cases compared to tests conducted.
+This script pulls CoViD-19 data from the web and processes it, returning a
+csv table with the daily new cases, normalized to the daily tests conducted.
+In simple terms that is: percent positive tests, per day.
 
-this information allows us to better asses if/when a second wave is coming/occuring
+This information allows us to better asses if/when a second wave is coming/occuring
 and what is its size.
 
-plotting the output data on a line chart in a spreadsheet is highly recommended!
-
-note: not all countrys' data has the required fields/columns.
-      israel (ISO_CODE=isr), for example, does!
+Note: Not all countrys' data has the required fields/columns.
+      Israel (ISR), for example, does!
 """
+
 import csv
 import os
 import subprocess
 import sys
+import time
 from pprint import pprint as pretty_print
 
 # config
@@ -38,8 +39,8 @@ def usage(exit_code=0):
 
 def stringy_float_to_int(stringy_float):
     """
-    converts a stringy float '3.14157' to an int 3.
-    if the string is empty, returns 0.
+    Converts a stringy float '3.14157' to an int 3.
+    If the string is empty, returns 0.
     """
     if not stringy_float:
         return 0
@@ -47,7 +48,7 @@ def stringy_float_to_int(stringy_float):
 
 def main():
     """
-    downloads (if not using cache), reads and parses the covid-19 data csv
+    Downloads (if not using cache), reads and parses the CoViD-19 data csv
     and creates an output file with processed data.
     """
     # default arguments
@@ -78,9 +79,13 @@ def main():
         print("DEBUG: iso_code = {}".format(iso_code))
         print("DEBUG: OUTPUT_DATA_FILE = {}".format(OUTPUT_DATA_FILE))
 
+
     # check/get INPUT_DATA_FILE
     if use_cached_data and os.path.exists(INPUT_DATA_FILE):
         print("INFO: Using locally cached file '{}'!".format(INPUT_DATA_FILE))
+        seconds_since_input_data_file_modified = time.time() - os.path.getmtime(INPUT_DATA_FILE)
+        if seconds_since_input_data_file_modified > 3600:
+            print("WARN: Locally cached file '{}' is more than 1 hour old!".format(INPUT_DATA_FILE))
     elif not use_cached_data:
         subprocess.call(["wget", INPUT_DATA_URL, "-O", INPUT_DATA_FILE])
     else:
@@ -91,10 +96,10 @@ def main():
     processed_data = []
 
     # populate lists
-    print("INFO: reading '{}'...".format(INPUT_DATA_FILE))
+    print("INFO: Reading '{}'...".format(INPUT_DATA_FILE))
     with open(INPUT_DATA_FILE) as csvfile:
         csv_data = csv.reader(csvfile)
-        print("INFO: parsing csv data...")
+        print("INFO: Parsing csv data...")
         for row in csv_data:
             if row[0] == iso_code:
                 new_cases = stringy_float_to_int(row[5])
@@ -108,11 +113,11 @@ def main():
 
     # debug print data
     if debug:
-        print("DEBUG: printing processed data...")
+        print("DEBUG: Printing processed data...")
         pretty_print(processed_data)
 
     # populate new csv file
-    print("INFO: writing to '{}'...".format(OUTPUT_DATA_FILE))
+    print("INFO: Writing to '{}'...".format(OUTPUT_DATA_FILE))
     with open(OUTPUT_DATA_FILE, 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(column_names)
