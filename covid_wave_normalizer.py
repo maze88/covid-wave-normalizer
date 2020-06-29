@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """
 This script pulls CoViD-19 data from the web and processes it, returning a
 csv table with the daily new cases, normalized to the daily tests conducted.
