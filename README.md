@@ -4,7 +4,7 @@
 
 This script pulls CoViD-19 data from the web and processes it, producing a csv table with the daily new cases, normalized to the daily tests conducted. In simple terms that is: percent positive tests, per day.
 
-## Why *NOT* to use it (disclaimer)
+## Why *NOT* to use it (disclaimer & interesting)
 
 Firstly this is just a fun scripting exercise I did, although I have a degree in Biologoy, this is not my daily work or expertise. Go consult the WHO, a doctor, or some real professional! ;-)
 
