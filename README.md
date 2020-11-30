@@ -8,7 +8,9 @@ This script pulls CoViD-19 data from the web and processes it, producing a csv t
 
 Firstly this is just a fun scripting exercise I did, although I have a degree in Biologoy, this is not my daily work or expertise. Go consult the WHO, a doctor, or some real professional! ;-)
 
-However, this information is not very useful unless one knows the distribution of the tests (where & from who they were taken). Results can easily be skewed if the tests are not distributed equally between healthy and infected populations. Skewed data can easily be used to drive certain political/social/economic interests or set certain narratives. As with in many topics, the bigger picture is often more complicated.
+Additionally, this information is not very useful unless one knows the distribution of the tests (where & from whom they were taken), since results can easily be skewed if the tests are not distributed equally between healthy and infected populations or locations.
+
+Skewed data can easily be used to drive certain political/social/economic interests or set certain narratives. As with in many topics, the bigger picture is often more complicated.
 
 ## Why to use it
 
