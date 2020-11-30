@@ -30,6 +30,7 @@ def usage(exit_code=0):
     """
     print("Usage: {} ISO_CODE [debug] [usecache] [help]".format(sys.argv[0]))
     print("  ISO_CODE    (required) filter data only of this country code.")
+    print("  [print]     script outputs results while running.")
     print("  [debug]     script prints more output while running.")
     print("  [usecache]  use the local file (if present) instead of downloading data again.")
     print("  [help]      displays this message")
@@ -62,6 +63,9 @@ def main():
     if "debug" in args:
         debug = True
         args.remove("debug")
+    if "print" in args:
+        print_results = True
+        args.remove("print")
     if "usecache" in args:
         use_cached_data = True
         args.remove("usecache")
@@ -73,6 +77,7 @@ def main():
     # debug print config
     if debug:
         print("DEBUG: debug = {}".format(debug))
+        print("DEBUG: print_results = {}".format(print_results))
         print("DEBUG: use_cached_data = {}".format(use_cached_data))
         print("DEBUG: INPUT_DATA_FILE = {}".format(INPUT_DATA_FILE))
         print("DEBUG: INPUT_DATA_URL = {}".format(INPUT_DATA_URL))
@@ -100,10 +105,16 @@ def main():
     with open(INPUT_DATA_FILE) as csvfile:
         csv_data = csv.reader(csvfile)
         print("INFO: Parsing csv data...")
+        columns = next(csv_data)
+        new_cases_column_index = columns.index("new_cases")
+        new_tests_column_index = columns.index("new_tests")
+        if debug:
+          print("DEBUG: new_cases_column_index = {}".format(new_cases_column_index))
+          print("DEBUG: new_tests_column_index = {}".format(new_tests_column_index))
         for row in csv_data:
             if row[0] == iso_code:
-                new_cases = stringy_float_to_int(row[5])
-                new_tests = stringy_float_to_int(row[13])
+                new_cases = stringy_float_to_int(row[new_cases_column_index])
+                new_tests = stringy_float_to_int(row[new_tests_column_index])
                 if not new_tests:
                     percent_new_cases = 0
                 else:
@@ -121,8 +132,14 @@ def main():
     with open(OUTPUT_DATA_FILE, 'w') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow(column_names)
+        if print_results:
+            column_names = [_.capitalize() for _ in column_names]
+            print("\t".join(column_names))
         for row in processed_data:
             csvwriter.writerow(row)
+            if print_results:
+                row[1] = str(round(row[1], 2)) + "%"
+                print("\t".join(row))
 
     # end
     print("Done! exiting...")

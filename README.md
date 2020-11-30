@@ -22,7 +22,7 @@ If we plot this normalized data, here is the chart we get:
 
 ## How to use it
 
-From your command line: `./covid_normalizer.py ISO_CODE [debug] [usecache] [help]`, output data will be save to `data_output.csv` in the current working directory.
+From your command line: `./main.py ISO_CODE [debug] [usecache] [help]`, output data will be save to `data_output.csv` in the current working directory.
 
 Where:
 - `ISO_CODE` (required) filter data only of this country.
@@ -31,8 +31,8 @@ Where:
 - `help`     displays usage instructions.
 
 Examples:
-- `./covid_normalizer.py ISR`
-- `./covid_normalizer.py isr usecache debug`
+- `./main.py ISR`
+- `./main.py isr usecache debug`
 
 **Note:** Not all countries' data have the columns required to perform this calculation. ISO codes ISR and USA, for example, do!
 
